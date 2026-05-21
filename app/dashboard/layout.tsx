@@ -1,16 +1,5 @@
 import { cookies } from "next/headers";
-import { Sidebar } from "@/components/sidebar";
 import { Separator } from "@/components/ui/separator";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { User, Settings, LogOut} from "lucide-react";
-import Link from "next/link";
-import {ModeToggle} from "@/components/ModeToggle";
 import {SidebarInset, SidebarProvider, SidebarTrigger} from "@/components/ui/sidebar";
 import {AppSidebar} from "@/components/app-sidebar";
 import {
