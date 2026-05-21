@@ -9,7 +9,10 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
+import {Plus, Server, Users2} from "lucide-react";
+import {DataTable} from "@/components/data-table";
+import {columns} from "@/app/dashboard/employees/columns";
 
 interface Employee {
     id: string;
@@ -50,52 +53,41 @@ export default async function EmployeesPage() {
     const employees = await getEmployees();
 
     return (
-        <Card>
-            <CardHeader className="flex flex-row items-center justify-between">
-                <CardTitle>Employees</CardTitle>
+        <div className="space-y-5">
+            <Card>
+                <CardHeader>
+                    <div className="flex items-center gap-4">
+                        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10">
+                            <Users2 className="h-6 w-6 text-primary"/>
+                        </div>
+                        <div>
+                            <CardTitle className="text-2xl">Services</CardTitle>
+                            <CardDescription>
+                                Create Add and Manage Services.
+                            </CardDescription>
+                        </div>
+                    </div>
+                </CardHeader>
+            </Card>
+            <Card>
+                <CardHeader className="flex flex-row items-center justify-between">
+                    <CardTitle className="text-lg font-bold text-primary">
+                        Current Active Employees
+                    </CardTitle>
+                </CardHeader>
 
-                <Link href="/dashboard/employees/new">
-                    <Button>Add Employee</Button>
-                </Link>
-            </CardHeader>
-
-            <CardContent>
-                <Table>
-                    <TableHeader>
-                        <TableRow>
-                            <TableHead>Name</TableHead>
-                            <TableHead>Email</TableHead>
-                            <TableHead>Role</TableHead>
-                            <TableHead className="text-right">Actions</TableHead>
-                        </TableRow>
-                    </TableHeader>
-
-                    <TableBody>
-                        {employees.map((emp) => (
-                            <TableRow key={emp.id}>
-                                <TableCell>{emp.name}</TableCell>
-                                <TableCell>{emp.email}</TableCell>
-                                <TableCell>{emp.role}</TableCell>
-                                <TableCell className="text-right">
-                                    {emp.id && (
-                                        <Link href={`/dashboard/employees/${emp.id}`}>
-                                            <Button variant="outline" size="sm">
-                                                View
-                                            </Button>
-                                        </Link>
-                                    )}
-                                </TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-
-                {employees.length === 0 && (
-                    <p className="text-sm text-muted-foreground mt-4">
-                        No employees found.
-                    </p>
-                )}
-            </CardContent>
-        </Card>
+                <CardContent>
+                    <div className="flex items-center justify-end py-4">
+                        <Link href="/dashboard/employees/new">
+                            <Button className="gap-2">
+                                <Plus className="h-4 w-4" />
+                                Add Employee
+                            </Button>
+                        </Link>
+                    </div>
+                    <DataTable columns={columns} data={employees} />
+                </CardContent>
+            </Card>
+        </div>
     );
 }

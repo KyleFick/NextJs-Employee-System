@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {ArrowLeft} from "lucide-react";
 
 export default function NewEmployeePage() {
     const router = useRouter();
@@ -37,50 +38,68 @@ export default function NewEmployeePage() {
     }
 
     return (
-        <Card className="max-w-md mx-auto">
-            <CardHeader>
-                <CardTitle>Create New Employee</CardTitle>
-            </CardHeader>
-            <CardContent>
-                <form className="space-y-4" onSubmit={handleSubmit}>
-                    <div className="space-y-1">
-                        <Label>Name</Label>
-                        <Input
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                            required
-                        />
-                    </div>
+        <div>
 
-                    <div className="space-y-1">
-                        <Label>Email</Label>
-                        <Input
-                            type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
-                        />
-                    </div>
+            <div className="flex items-center justify-between">
 
-                    <div className="space-y-1">
-                        <Label>Role</Label>
-                        <select
-                            className="border rounded px-2 py-1 w-full"
-                            value={role}
-                            onChange={(e) => setRole(e.target.value as "ADMIN" | "EMPLOYEE")}
-                        >
-                            <option value="EMPLOYEE">Employee</option>
-                            <option value="ADMIN">Admin</option>
-                        </select>
-                    </div>
+                <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => router.back()}
+                    className="gap-2"
+                >
+                    <ArrowLeft className="h-4 w-4" />
+                    Back
+                </Button>
 
-                    {error && <p className="text-red-500 text-sm">{error}</p>}
+            </div>
+                <Card className="w-full mx-auto">
 
-                    <Button type="submit" className="w-full" disabled={loading}>
-                        {loading ? "Creating..." : "Create Employee"}
-                    </Button>
-                </form>
-            </CardContent>
-        </Card>
+                    <CardHeader>
+                        <CardTitle>Create New Employee</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <form className="space-y-4" onSubmit={handleSubmit}>
+                            <div className="space-y-1">
+                                <Label>Name</Label>
+                                <Input
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                    required
+                                />
+                            </div>
+
+                            <div className="space-y-1">
+                                <Label>Email</Label>
+                                <Input
+                                    type="email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    required
+                                />
+                            </div>
+
+                            <div className="space-y-1">
+                                <Label>Role</Label>
+                                <select
+                                    className="border rounded px-2 py-1 w-full"
+                                    value={role}
+                                    onChange={(e) => setRole(e.target.value as "ADMIN" | "EMPLOYEE")}
+                                >
+                                    <option value="EMPLOYEE">Employee</option>
+                                    <option value="ADMIN">Admin</option>
+                                </select>
+                            </div>
+
+                            {error && <p className="text-red-500 text-sm">{error}</p>}
+
+                            <Button type="submit" className="max-w-md" disabled={loading}>
+                                {loading ? "Creating..." : "Create Employee"}
+                            </Button>
+                        </form>
+                    </CardContent>
+                </Card>
+
+        </div>
     );
 }

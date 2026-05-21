@@ -11,6 +11,15 @@ import {
 import { User, Settings, LogOut} from "lucide-react";
 import Link from "next/link";
 import {ModeToggle} from "@/components/ModeToggle";
+import {SidebarInset, SidebarProvider, SidebarTrigger} from "@/components/ui/sidebar";
+import {AppSidebar} from "@/components/app-sidebar";
+import {
+    Breadcrumb,
+    BreadcrumbItem,
+    BreadcrumbLink,
+    BreadcrumbList, BreadcrumbPage,
+    BreadcrumbSeparator
+} from "@/components/ui/breadcrumb";
 
 export default async function DashboardLayout({
                                                   children,
@@ -31,75 +40,36 @@ export default async function DashboardLayout({
         .toUpperCase();
 
     return (
-        <div className="flex h-screen bg-background">
-            {/* Sidebar */}
-            <Sidebar role={user.role} />
 
-            {/* Main area */}
-            <div className="flex flex-col flex-1 overflow-hidden">
-                {/* Topbar */}
-                <header className="h-14 border-b bg-background flex items-center justify-between px-6">
-                    <h1 className="text-base font-semibold tracking-tight">
-                        Dashboard
-                    </h1>
-
-                    {/* User menu */}
-                    <DropdownMenu>
-                        <DropdownMenuTrigger className="flex items-center gap-2">
-                            <Avatar className="h-8 w-8">
-                                <AvatarFallback>{initials}</AvatarFallback>
-                            </Avatar>
-
-                            <div className="text-right leading-tight">
-                                <p className="text-sm font-medium">
-                                    {user.name}
-                                </p>
-                                <p className="text-xs text-muted-foreground">
-                                    {user.role}
-                                </p>
-                            </div>
-                        </DropdownMenuTrigger>
-
-                        <DropdownMenuContent align="end">
-                            <DropdownMenuItem asChild>
-                                <Link href="/dashboard/profile" className="flex items-center gap-2">
-                                    <User size={16} />
-                                    Profile
-                                </Link>
-                            </DropdownMenuItem>
-                            <DropdownMenuItem>
-                                <div className="flex items-center gap-2">
-                                    <ModeToggle/>
-                                    Theme
-                                </div>
-                            </DropdownMenuItem>
-                            <DropdownMenuItem asChild>
-                                <Link href="/dashboard/settings" className="flex items-center gap-2">
-                                    <Settings size={16} />
-                                    Settings
-                                </Link>
-                            </DropdownMenuItem>
-
-                            <DropdownMenuItem asChild>
-                                <Link
-                                    href="/out"
-                                    className="flex items-center gap-2 text-red-500"
-                                >
-                                    <LogOut size={16} />
-                                    Logout
-                                </Link>
-                            </DropdownMenuItem>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
+        <SidebarProvider>
+            <AppSidebar />
+            <SidebarInset>
+                <header className="flex h-16 shrink-0 items-center gap-2">
+                    <div className="flex items-center gap-2 px-4">
+                        <SidebarTrigger className="-ml-1" />
+                        <Separator
+                            orientation="vertical"
+                            className="mr-2 data-[orientation=vertical]:h-4"
+                        />
+                        <Breadcrumb>
+                            <BreadcrumbList>
+                                <BreadcrumbItem className="hidden md:block">
+                                    <BreadcrumbLink href="#">
+                                        Build Your Application
+                                    </BreadcrumbLink>
+                                </BreadcrumbItem>
+                                <BreadcrumbSeparator className="hidden md:block" />
+                                <BreadcrumbItem>
+                                    <BreadcrumbPage>Data Fetching</BreadcrumbPage>
+                                </BreadcrumbItem>
+                            </BreadcrumbList>
+                        </Breadcrumb>
+                    </div>
                 </header>
-
-                <Separator />
-
-                {/* Page content */}
-                <main className="flex-1 overflow-y-auto p-6 bg-muted/40">
+                <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
                     {children}
-                </main>
-            </div>
-        </div>
+                </div>
+            </SidebarInset>
+        </SidebarProvider>
     );
 }

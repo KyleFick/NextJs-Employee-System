@@ -1,83 +1,29 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-
+import { LoginForm } from "@/components/login-form";
+import Image from "next/image";
 export default function LoginPage() {
-  const router = useRouter();
-  const [email, setEmail] = useState("");
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-
-  async function handleLogin(e: React.FormEvent) {
-    e.preventDefault();
-    setError("");
-    setLoading(true);
-
-    const res = await fetch("/api/auth/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email }),
-    });
-
-    setLoading(false);
-
-    if (!res.ok) {
-      setError("Invalid email");
-      return;
-    }
-
-    router.push("/dashboard");
-  }
 
   return (
-      <div className="min-h-screen flex items-center justify-center bg-muted">
-        <Card className="w-full max-w-sm">
-          <CardHeader>
-            <CardTitle className="text-center text-2xl">
-              Employee Management Login
-            </CardTitle>
-          </CardHeader>
+      <div className="relative flex min-h-svh flex-col items-center justify-center p-6 md:p-10">
 
-          <CardContent>
-            <form onSubmit={handleLogin} className="space-y-4">
-              <div className="space-y-1">
-                <Label htmlFor="email">Email</Label>
-                <Input
-                    id="email"
-                    type="email"
-                    placeholder="admin@test.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                />
-              </div>
+          {/* Background image */}
+          <Image
+              src="/Employee Management System.png"
+              alt="Background"
+              fill
+              priority
+              className="object-cover -z-10"
+          />
 
-              {error && (
-                  <p className="text-sm text-red-500">{error}</p>
-              )}
+          {/* Optional overlay for readability */}
+          <div className="absolute inset-0 bg-black/50" />
 
-              <Button
-                  type="submit"
-                  className="w-full"
-                  disabled={loading}
-              >
-                {loading ? "Signing in..." : "Sign In"}
-              </Button>
-            </form>
-
-            {/* Interview Helper */}
-            <div className="mt-4 text-sm text-muted-foreground">
-              <p>Demo accounts:</p>
-              <p>admin@test.com</p>
-              <p>employee@test.com</p>
-            </div>
-          </CardContent>
-        </Card>
+          {/* Content */}
+          <div className="relative w-full max-w-sm md:max-w-4xl">
+              <LoginForm />
+          </div>
       </div>
-  );
+  )
 }
+
