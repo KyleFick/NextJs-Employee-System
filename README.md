@@ -17,5 +17,3 @@ View own profile (Admin & Employee)
 Admin can view other users
 
 ✅ shadcn/ui components (modern, production-style UI)
-
-✅ Scales easily to Prisma + NeonDB + NextAuth
